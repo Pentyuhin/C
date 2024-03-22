@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include "Header.h"
 
 using namespace std;
@@ -19,15 +19,15 @@ void print_day(Day day, ostream& os);
 
 void shop_day()
 {
-	// Печать заголовка таблицы
+	// РџРµС‡Р°С‚СЊ Р·Р°РіРѕР»РѕРІРєР° С‚Р°Р±Р»РёС†С‹
 	cout.width(17);
-	cout << "ДЕНЬ ";
+	cout << "Р”Р•РќР¬ ";
 	cout.width(19);
-	cout << "ВРЕМЯ ЗАКРЫВАЕТСЯ \n\n";
+	cout << "Р’Р Р•РњРЇ Р—РђРљР Р«Р’РђР•РўРЎРЇ \n\n";
 
 
-	// Печать таблицы от понедельника (Day::Monday) до
-	// воскресенья (Day::Sunday)
+	// РџРµС‡Р°С‚СЊ С‚Р°Р±Р»РёС†С‹ РѕС‚ РїРѕРЅРµРґРµР»СЊРЅРёРєР° (Day::Monday) РґРѕ
+	// РІРѕСЃРєСЂРµСЃРµРЅСЊСЏ (Day::Sunday)
 	for (int count = static_cast<int>(Day::Monday); count <= static_cast<int>(Day::Sunday); count++)
 	{
 		cout.width(19);
@@ -51,13 +51,13 @@ void print_day(Day day, ostream& os)
 {
 	switch (static_cast<int>(day))
 	{
-		case 0: cout << "Понедельник"; break;
-		case 1: cout << "Вторник"; break;
-		case 2: cout << "Среда"; break;
-		case 3: cout << "Четверг"; break;
-		case 4:	cout << "Пятница"; break;
-		case 5: cout << "Суббота"; break;
-		case 6: cout << "Воскресенье"; break;
-		default: cout << "ОШИБКА!"; break;
+		case 0: cout << "РџРѕРЅРµРґРµР»СЊРЅРёРє"; break;
+		case 1: cout << "Р’С‚РѕСЂРЅРёРє"; break;
+		case 2: cout << "РЎСЂРµРґР°"; break;
+		case 3: cout << "Р§РµС‚РІРµСЂРі"; break;
+		case 4:	cout << "РџСЏС‚РЅРёС†Р°"; break;
+		case 5: cout << "РЎСѓР±Р±РѕС‚Р°"; break;
+		case 6: cout << "Р’РѕСЃРєСЂРµСЃРµРЅСЊРµ"; break;
+		default: cout << "РћРЁРР‘РљРђ!"; break;
 	}
 }
