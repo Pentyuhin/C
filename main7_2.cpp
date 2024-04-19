@@ -6,6 +6,9 @@
 using namespace std;
 
 int find_first_vowel(const string& word);
+void print_text(int index1, int index2);
+
+void string_comparison(string& first_word, string& second_word);
 
 int main()
 {
@@ -22,6 +25,31 @@ int main()
 
     int index1 = find_first_vowel(first_word);
     int index2 = find_first_vowel(second_word);
+
+    print_text(index1, index2);
+
+    string_comparison(first_word, second_word);
+
+    return 0;
+}
+
+int find_first_vowel(const string& word)
+{
+    for (size_t i = 0; i < word.length(); i++)
+    {
+        char letter = tolower(word[i]);
+        if (letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u')
+        {
+            return i;
+        }
+    }
+    return -1; // Если гласные буквы не найдены
+}
+
+
+void print_text(int index1, int index2)
+{
+
 
     if (index1 == -1 && index2 == -1)
     {
@@ -40,18 +68,29 @@ int main()
         cout << "Первые гласные буквы в обоих словах расположены на одной и той же позиции." << endl;
     }
 
-    return 0;
 }
 
-int find_first_vowel(const string& word)
+void string_comparison(string& first_word, string& second_word)
 {
-    for (size_t i = 0; i < word.length(); i++)
+    int i = 0;
+    int j = 0;
+
+    for (; i < first_word.length(); i++);
+
+    for (; j < second_word.length(); j++);
+
+
+    if (i > j)
     {
-        char letter = tolower(word[i]);
-        if (letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u')
-        {
-            return i;
-        }
+        cout << first_word << " больше чем " << second_word;
     }
-    return -1; // Если гласные буквы не найдены
+    else if (i < j)
+    {
+        cout << first_word << " меньше чем " << second_word;
+    }
+    else
+    {
+        cout << second_word << " равны " << first_word;
+    }
+
 }
