@@ -20,8 +20,12 @@ void assign_list(node_ptr& a_list);
 void assign_new_node(node_ptr& a_list);
 void print_list(node_ptr a_list);
 
-void add_after(node_ptr& list, char a_word[], char word_after[]);
-void delete_node(node_ptr& a_list, char a_word[]);
+void add_after(node_ptr& list);
+void delete_node(node_ptr& a_list);
+
+void insertion_sort(node_ptr& a_list);
+
+
 int main()
 {
     SetConsoleCP(1251);
@@ -29,15 +33,13 @@ int main()
 
     node_ptr list = nullptr;
 
-    char a_word[MAX_WORD_LENGTH]{};
-    char word_after[MAX_WORD_LENGTH]{};
-
     assign_list(list);
     print_list(list);
 
-    add_after(list, a_word, word_after);
-    delete_node(list, a_word);
-   
+    add_after(list);
+    delete_node(list);
+    insertion_sort(list);
+
 
     return 0;
 }
@@ -94,79 +96,120 @@ void print_list(node_ptr a_list)
         cout << a_list->word << " ";
         a_list = a_list->ptr_to_next_node;
     }
+
 }
 
-void add_after(node_ptr& list, char a_word[], char word_after[])
+void add_after(node_ptr& list)
 {
-    
+
     char search_word[MAX_WORD_LENGTH];
 
-    cout << "ПОСЛЕ КАКОГО СЛОВА ВЫ ХОТИТЕ ВСТАВИТЬ НОВОЕ СЛОВО? ";
+    cout << "\nПОСЛЕ КАКОГО СЛОВА ВЫ ХОТИТЕ ВСТАВИТЬ НОВОЕ СЛОВО? ";
     cin >> search_word;
 
     node_ptr current = list, new_node = nullptr;
 
-    while (current != nullptr && strcmp(current->word, search_word) != 0)
-    {
-        current = current->ptr_to_next_node;
-    }
+    assign_new_node(new_node);
+    cout << "Введите новое слово для вставки: ";
+    cin >> new_node->word;
 
-    if (current != nullptr)
+    while (current != nullptr)
     {
-       
-        assign_new_node(new_node);
-        cout << "Введите новое слово для вставки: ";
-        cin >> new_node->word;
 
-        if (current->ptr_to_next_node != nullptr)
+        if (!strcmp(current->word, search_word))
         {
             new_node->ptr_to_next_node = current->ptr_to_next_node;
             current->ptr_to_next_node = new_node;
+            print_list(list);
+            return;
         }
-        else
-        {
-            current->ptr_to_next_node = new_node;
-            new_node->ptr_to_next_node = nullptr;
-        }
-    }
-    else
-    {
-        cout << "Не удалось найти указанное слово в списке." << endl;
-    }
 
-    print_list(list);
-}
-
-
-void delete_node(node_ptr& a_list, char a_word[]) 
-{
-    node_ptr current = a_list, previous = nullptr;
-
-    char search_word[MAX_WORD_LENGTH];
-
-    cout << "КАКОЕ СЛОВО ВЫ ХОТИТЕ УДАЛИТЬ? ";
-    cin >> search_word;
-
-    while (current != nullptr && strcmp(current->word, search_word) != 0) 
-    {
-        previous = current;
         current = current->ptr_to_next_node;
     }
 
-    if (current == nullptr) {
-        cout << "Слово не найдено в списке." << endl;
+}
+
+
+
+void delete_node(node_ptr& a_list)
+{
+    char search_word[MAX_WORD_LENGTH];
+
+    cout << "\nКАКОЕ СЛОВО ВЫ ХОТИТЕ УДАЛИТЬ? ";
+    cin >> search_word;
+
+    if (!strcmp(a_list->word, search_word))
+    {
+        node_ptr old_head = a_list;
+        a_list = a_list->ptr_to_next_node;
+        delete old_head;
+        cout << "Слово успешно удалено." << endl;
+        print_list(a_list);
         return;
     }
+    else
+    {
+        node_ptr prev_word = a_list;
+        node_ptr cur_cord = a_list->ptr_to_next_node;
 
+        while (cur_cord != nullptr)
+        {
+            if (!strcmp(cur_cord->word, search_word))
+            {
+                prev_word->ptr_to_next_node = cur_cord->ptr_to_next_node;
+                delete cur_cord;
+                cout << "Слово успешно удалено." << endl;
+                print_list(a_list);
+                return;
+            }
 
-    if (previous == nullptr) {
-        current = current->ptr_to_next_node; // Удаляем первый узел
+            prev_word = cur_cord;
+            cur_cord = cur_cord->ptr_to_next_node;
+        }
     }
-    else {
-        previous->ptr_to_next_node = current->ptr_to_next_node; // Обновляем связи
-    }
 
-    delete current; // Удаляем найденный узел
+    cout << "Слово не найдено в списке." << endl;
 
     print_list(a_list);
+}
+
+
+
+void insertion_sort(node_ptr& a_list)
+{
+    if (a_list == nullptr || a_list->ptr_to_next_node == nullptr)
+    {
+        return; // Список пуст или содержит только один элемент, уже отсортирован
+    }
+
+    node_ptr sorted_list = nullptr;
+    node_ptr current = a_list;
+
+    while (current != nullptr)
+    {
+        node_ptr next = current->ptr_to_next_node;
+        insert_node_sorted(sorted_list, current);
+        current = next;
+    }
+
+    a_list = sorted_list;
+}
+
+void insert_node_sorted(node_ptr& sorted_list, node_ptr node_to_insert)
+{
+    if (sorted_list == nullptr || strcmp(node_to_insert->word, sorted_list->word) <= 0)
+    {
+        node_to_insert->ptr_to_next_node = sorted_list;
+        sorted_list = node_to_insert;
+    }
+    else
+    {
+        node_ptr current = sorted_list;
+        while (current->ptr_to_next_node != nullptr && strcmp(node_to_insert->word, current->ptr_to_next_node->word) > 0)
+        {
+            current = current->ptr_to_next_node;
+        }
+        node_to_insert->ptr_to_next_node = current->ptr_to_next_node;
+        current->ptr_to_next_node = node_to_insert;
+    }
 }
