@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <cctype> 
+#include <windows.h>
 
 
 using namespace std;
@@ -13,7 +14,9 @@ void string_comparison(string& first_word, string& second_word);
 int main()
 {
 
-    setlocale(LC_ALL, "rus");
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
 
     string first_word, second_word;
 
@@ -28,7 +31,7 @@ int main()
 
     print_text(index1, index2);
 
-    string_comparison(first_word, second_word);
+    string_comparison (first_word, second_word);
 
     return 0;
 }
@@ -39,6 +42,10 @@ int find_first_vowel(const string& word)
     {
         char letter = tolower(word[i]);
         if (letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u')
+        {
+            return i;
+        }
+        if (letter == 'а' || letter == 'и' || letter == 'е' || letter == 'ё' || letter == 'о' || letter == 'у' || letter == 'ы' || letter == 'э' || letter == 'ю' || letter == 'я')
         {
             return i;
         }
