@@ -24,7 +24,7 @@ void add_after(node_ptr& list);
 void delete_node(node_ptr& a_list);
 
 void insertion_sort(node_ptr& a_list);
-
+void insert_node_sorted(node_ptr& sorted_list, node_ptr node_to_insert);
 
 int main()
 {
@@ -34,16 +34,18 @@ int main()
     node_ptr list = nullptr;
 
     assign_list(list);
-    print_list(list);
+
 
     add_after(list);
     delete_node(list);
-    insertion_sort(list);
 
+    insertion_sort(list);
+    print_list(list);
 
     return 0;
 }
 
+// Функция заполнения списка
 void assign_list(node_ptr& a_list)
 {
     node_ptr current_node = nullptr, last_node = nullptr;
@@ -78,6 +80,7 @@ void assign_list(node_ptr& a_list)
     }
 }
 
+// Функция создания нового узла
 void assign_new_node(node_ptr& a_list)
 {
     a_list = new node;
@@ -88,6 +91,7 @@ void assign_new_node(node_ptr& a_list)
     }
 }
 
+// Функция вывода списка
 void print_list(node_ptr a_list)
 {
     cout << "ТЕКУЩЕЕ СОДЕРЖИМОЕ СПИСКА: \n";
@@ -99,6 +103,7 @@ void print_list(node_ptr a_list)
 
 }
 
+// Функция добавления элемента после указанного слова
 void add_after(node_ptr& list)
 {
 
@@ -130,7 +135,7 @@ void add_after(node_ptr& list)
 }
 
 
-
+// Функция удаления узла по заданному слову
 void delete_node(node_ptr& a_list)
 {
     char search_word[MAX_WORD_LENGTH];
@@ -174,7 +179,7 @@ void delete_node(node_ptr& a_list)
 }
 
 
-
+// Функция сортировки списка
 void insertion_sort(node_ptr& a_list)
 {
     if (a_list == nullptr || a_list->ptr_to_next_node == nullptr)
@@ -195,6 +200,7 @@ void insertion_sort(node_ptr& a_list)
     a_list = sorted_list;
 }
 
+// Функция вставки узла в отсортированный список
 void insert_node_sorted(node_ptr& sorted_list, node_ptr node_to_insert)
 {
     if (sorted_list == nullptr || strcmp(node_to_insert->word, sorted_list->word) <= 0)
